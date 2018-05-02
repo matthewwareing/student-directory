@@ -19,8 +19,14 @@ def print_header
   puts "-------------"
 end
 
-def print(names)
-  names.each.with_index(1) {|student, i| puts "#{i}.#{student[:name]} (#{student[:cohort]} cohort)" }
+# def print(names)
+#   names.each.with_index(1) {|student, i| puts "#{i}.#{student[:name]} (#{student[:cohort]} cohort)" }
+# end
+
+def print_beginning_with_s(names)
+  names.each {|student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0] == "s"
+  }
 end
 
 def print_footer(names)
@@ -29,5 +35,6 @@ end
 
 students = input_student
 print_header
-print(students)
+# print(students)
+print_beginning_with_s(students)
 print_footer(students)
