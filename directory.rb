@@ -45,3 +45,8 @@ print_header
 # print_beginning_with_s(students)
 print_less_than_12(students)
 print_footer(students)
+
+while (i ||= 0) < students.length
+  puts "#{students[i][:name]} (#{students[i][:cohort]} cohort)"
+  i+=1
+end
