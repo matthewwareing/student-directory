@@ -1,17 +1,16 @@
+@students = []
 def input_student
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # create an empty array
-  students = []
   # while the name is not empty, repeat this code
   while name = gets.chomp do
     break if name.empty?
     # add the student hash to the array
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+    @students << {name: name, cohort: :november}
+    puts "Now we have #{@students.count} student#{pluralise?(@students)}"
   end
   # return the array of students
-  students
+  @students
 end
 
 def print_header
@@ -19,34 +18,54 @@ def print_header
   puts "-------------"
 end
 
-def print(names)
-  names.each.with_index(1) {|student, i| puts "#{i}.#{student[:name]} (#{student[:cohort]} cohort)" }
+def pluralise? n
+  "s" if n.count > 1
 end
 
-def print_beginning_with_s(names)
-  names.each {|student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0] == "s"
-  }
+def print_student_list
+  @students.each.with_index(1) do |student, i| 
+    puts "#{i}.#{student[:name]} (#{student[:cohort]} cohort)"
+  end
 end
 
-def print_less_than_12(names)
-  names.each {|student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length < 12
-  }
+def print_footer
+  puts "Overall, we have #{@students.count} great student#{pluralise?(@students)}"
 end
 
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
 end
 
-students = input_student
-print_header
-# print(students)
-# print_beginning_with_s(students)
-print_less_than_12(students)
-print_footer(students)
-
-while (i ||= 0) < students.length
-  puts "#{students[i][:name]} (#{students[i][:cohort]} cohort)"
-  i+=1
+def show_students
+  if @students.count > 0
+    print_header 
+    print_student_list
+    print_footer
+  else
+    puts "Please input some students before you print them!"
+  end
 end
+
+def process(selection)
+  case selection
+    when "1"
+      input_student
+    when "2"
+      show_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
+  end
+end
+
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+interactive_menu
