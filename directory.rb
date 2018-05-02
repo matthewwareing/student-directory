@@ -19,13 +19,19 @@ def print_header
   puts "-------------"
 end
 
-# def print(names)
-#   names.each.with_index(1) {|student, i| puts "#{i}.#{student[:name]} (#{student[:cohort]} cohort)" }
-# end
+def print(names)
+  names.each.with_index(1) {|student, i| puts "#{i}.#{student[:name]} (#{student[:cohort]} cohort)" }
+end
 
 def print_beginning_with_s(names)
   names.each {|student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0] == "s"
+  }
+end
+
+def print_less_than_12(names)
+  names.each {|student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length < 12
   }
 end
 
@@ -36,5 +42,6 @@ end
 students = input_student
 print_header
 # print(students)
-print_beginning_with_s(students)
+# print_beginning_with_s(students)
+print_less_than_12(students)
 print_footer(students)
