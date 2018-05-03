@@ -6,8 +6,8 @@ def input_student
 
   while name = STDIN.gets.chomp do
     break if name.empty?
-    @students << {name: name, cohort: :november}
-    puts "Now we have #{@students.count} student#{pluralise?(@students)}"
+    add_student(name, cohort='november')
+    puts "Now we have #{@students.count} student#{plural?(@students)}"
   end
   @students
 end
@@ -46,9 +46,9 @@ end
 
 def show_students
   if @students.count > 0
-    print_header 
+    puts "\nThe students of Villains Academy\n-------------"
     print_student_list
-    print_footer
+    puts "Overall, we have #{@students.count} great student#{plural?(@students)}\n\n"
   else
     puts "Please input some students before you print them!"
   end
@@ -60,17 +60,8 @@ def print_student_list
   end
 end
 
-def pluralise? n
+def plural? n
   "s" if n.count > 1
-end
-
-def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
-end
-
-def print_footer
-  puts "Overall, we have #{@students.count} great student#{pluralise?(@students)}"
 end
 
 def save_students
@@ -87,9 +78,13 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << { name: name, cohort: cohort.to_sym }
+    add_student(name, cohort)
   end
   file.close
+end
+
+def add_student name, cohort
+  @students << {name: name, cohort: cohort.to_sym }
 end
 
 def try_load_students
